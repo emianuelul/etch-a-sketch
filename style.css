@@ -43,6 +43,12 @@ body{
     flex-grow: auto;
 }
 
+.title{
+    color: #7198ae;
+    font-size: 60px;
+    text-align: center;
+}
+
 .right{
     display: flex;
     align-items: center;

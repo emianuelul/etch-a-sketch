@@ -105,6 +105,8 @@ canvas.addEventListener('mouseover', (event) => {
         return;
 })
 
+canvas.addEventListener('mouseleave', () => isHoldingMouseButton = false)
+
 resizeBtn.addEventListener('click', () => setCanvasWidth());
 
 clearBtn.addEventListener('click', clearCanvas)
