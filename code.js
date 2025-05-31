@@ -53,7 +53,7 @@ function clearCanvas(){
 
 function setCanvasWidth(){
     
-    let newWidth = parseInt(prompt("What size x width do you want your canvas to be?"));
+    let newWidth = parseInt(prompt("What size in pixels do you want your canvas to be?\n Introduce only one number."));
     if(newWidth > 100){
         newWidth = 100;
     }
