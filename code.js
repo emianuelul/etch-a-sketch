@@ -5,8 +5,11 @@ const canvasSide = parseInt(canvasStyle.width) - 2 * parseInt(canvasStyle.border
 let isHoldingMouseButton = false;
 let crazyModeChecked = false;
 
+let eraserOn = false;
+
 const resizeBtn = document.querySelector('#resizeBtn');
 const clearBtn = document.querySelector('#clearBtn');
+const earserBtn = document.querySelector('#eraser');
 const crazyCheck = document.querySelector('input[name=crazy-mode]')
 
 let pixelCountW = 16;
@@ -34,7 +37,6 @@ function initCanvas(width){
     for(let i = 0; i < width; i++){
         for(let j = 0; j < width; j++){
             let pixel = document.createElement("div");
-            pixel.classList.add(`${i}-${j}`);
             pixel.classList.add("pixel");
             pixel.style.width = `${canvasSide / width}px`;
             pixel.style.height = `${canvasSide / width}px`;
@@ -77,18 +79,24 @@ function setCanvasWidth(){
 function paintPixel(event){
     const target = event.target;
 
-    if(crazyModeChecked){
-        const r = Math.floor(Math.random() * 256) + 1;
-        const g = Math.floor(Math.random() * 256) + 1;
-        const b = Math.floor(Math.random() * 256) + 1;
-
-        target.style.backgroundColor = `rgb(${r}, ${g}, ${b})`;
-    }   
-    else{
-        target.style.backgroundColor = 'black';
+    if(eraserOn){
+        target.style.backgroundColor = 'white';
     }
+    else{
+        if(crazyModeChecked){
+            const r = Math.floor(Math.random() * 256) + 1;
+            const g = Math.floor(Math.random() * 256) + 1;
+            const b = Math.floor(Math.random() * 256) + 1;
+
+            target.style.backgroundColor = `rgb(${r}, ${g}, ${b})`;
+        }   
+        else{
+        target.style.backgroundColor = 'black';
+        }
+    }
+   
 }
- 
+
 // =========== EVENT LISTENERS ===============
 
 canvas.addEventListener('mousedown', (event) => {
@@ -117,4 +125,15 @@ clearBtn.addEventListener('click', clearCanvas)
 
 crazyCheck.addEventListener('change', () => {
     crazyModeChecked = !crazyModeChecked;
+})
+
+earserBtn.addEventListener('click', () => {
+    if(eraserOn){
+        earserBtn.classList.remove('selected')
+        eraserOn = false;
+    }
+    else{
+        earserBtn.classList.add('selected')
+        eraserOn = true;
+    }
 })
