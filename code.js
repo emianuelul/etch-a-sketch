@@ -3,11 +3,13 @@ const canvasStyle = getComputedStyle(canvas);
 const canvasSide = parseInt(canvasStyle.width) - 2 * parseInt(canvasStyle.borderWidth);
 
 let isHoldingMouseButton = false;
+let crazyModeChecked = false;
 
 console.log(canvasSide);
 
 const resizeBtn = document.querySelector('#resizeBtn');
 const clearBtn = document.querySelector('#clearBtn');
+const crazyCheck = document.querySelector('input[name=crazy-mode]')
 
 let pixelCountW = 16;
 initCanvas(pixelCountW);
@@ -28,12 +30,12 @@ function initCanvas(width){
     console.log(pixels)
     pixels.forEach((pixel) => {
         pixel.addEventListener('mouseover', () =>{
-            if(pixel.style.backgroundColor === 'black')
+            if(pixel.style.backgroundColor !== null)
                 return;
             pixel.style.backgroundColor = 'rgba(0, 0, 0, 0.25)';
         })
         pixel.addEventListener('mouseleave', () => {
-            if(pixel.style.backgroundColor === 'black')
+            if(pixel.style.backgroundColor !== null)
                 return
             pixel.style.backgroundColor = 'white';
         })
@@ -41,6 +43,7 @@ function initCanvas(width){
 }
 
 function setCanvasWidth(){
+    
     const newWidth = parseInt(prompt("What size x width do you want your canvas to be?"));
     if(newWidth > 100){
         newWidth = 100;
@@ -53,14 +56,31 @@ function setCanvasWidth(){
     pixelCountW = newWidth;
     initCanvas(pixelCountW);
 }
-// =========== EVENT LISTENERS ===============
-canvas.addEventListener('mousedown', (event) => {
+
+function paintPixel(event){
     const target = event.target;
 
-    isHoldingMouseButton = true;
     console.log(isHoldingMouseButton);
 
-    target.style.backgroundColor = "black";
+    if(crazyModeChecked){
+        const r = Math.floor(Math.random() * 256) + 1;
+        const g = Math.floor(Math.random() * 256) + 1;
+        const b = Math.floor(Math.random() * 256) + 1;
+
+        target.style.backgroundColor = `rgb(${r}, ${g}, ${b})`;
+    }   
+    else{
+        target.style.backgroundColor = 'black';
+    }
+}
+
+ 
+// =========== EVENT LISTENERS ===============
+
+canvas.addEventListener('mousedown', (event) => {
+    isHoldingMouseButton = true;
+    
+    paintPixel(event);
 })
 
 canvas.addEventListener('mouseup', () => {
@@ -69,13 +89,11 @@ canvas.addEventListener('mouseup', () => {
 
 canvas.addEventListener('mouseover', (event) => {
     if(isHoldingMouseButton){
-        event.target.style.backgroundColor = "black";
+        paintPixel(event);
     }
     else
         return;
 })
-
-
 
 resizeBtn.addEventListener('click', () => setCanvasWidth());
 
@@ -84,3 +102,9 @@ clearBtn.addEventListener('click', () => {
         pixel.style.backgroundColor = 'white';
     }
 })
+
+crazyCheck.addEventListener('change', () => {
+    crazyModeChecked = !crazyModeChecked;
+    console.log(crazyModeChecked)
+}
+)
