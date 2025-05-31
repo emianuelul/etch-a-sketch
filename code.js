@@ -2,15 +2,15 @@ const canvas = document.querySelector(".canvas");
 const canvasStyle = getComputedStyle(canvas);
 const canvasSide = parseInt(canvasStyle.width) - 2 * parseInt(canvasStyle.borderWidth);
 
+let isHoldingMouseButton = false;
+
 console.log(canvasSide);
 
 const resizeBtn = document.querySelector('#resizeBtn');
 const clearBtn = document.querySelector('#clearBtn');
 
 let pixelCountW = 16;
-
 initCanvas(pixelCountW);
-let pixels = document.querySelectorAll(".pixel");
 
 // =============== FUNCTIONS =================
 function initCanvas(width){
@@ -24,6 +24,20 @@ function initCanvas(width){
             canvas.appendChild(pixel);
         }
     }
+    pixels = document.querySelectorAll(".pixel");
+    console.log(pixels)
+    pixels.forEach((pixel) => {
+        pixel.addEventListener('mouseover', () =>{
+            if(pixel.style.backgroundColor === 'black')
+                return;
+            pixel.style.backgroundColor = 'rgba(0, 0, 0, 0.25)';
+        })
+        pixel.addEventListener('mouseleave', () => {
+            if(pixel.style.backgroundColor === 'black')
+                return
+            pixel.style.backgroundColor = 'white';
+        })
+    })
 }
 
 function setCanvasWidth(){
@@ -35,19 +49,33 @@ function setCanvasWidth(){
     for(const pixel of pixels){
         canvas.removeChild(pixel);
     }
+
     pixelCountW = newWidth;
     initCanvas(pixelCountW);
-    pixels = document.querySelectorAll(".pixel");
-    console.log(pixels)
 }
 // =========== EVENT LISTENERS ===============
 canvas.addEventListener('mousedown', (event) => {
     const target = event.target;
 
+    isHoldingMouseButton = true;
+    console.log(isHoldingMouseButton);
+
     target.style.backgroundColor = "black";
 })
 
-canvas
+canvas.addEventListener('mouseup', () => {
+    isHoldingMouseButton = false;
+})
+
+canvas.addEventListener('mouseover', (event) => {
+    if(isHoldingMouseButton){
+        event.target.style.backgroundColor = "black";
+    }
+    else
+        return;
+})
+
+
 
 resizeBtn.addEventListener('click', () => setCanvasWidth());
 
