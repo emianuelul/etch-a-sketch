@@ -5,8 +5,6 @@ const canvasSide = parseInt(canvasStyle.width) - 2 * parseInt(canvasStyle.border
 let isHoldingMouseButton = false;
 let crazyModeChecked = false;
 
-console.log(canvasSide);
-
 const resizeBtn = document.querySelector('#resizeBtn');
 const clearBtn = document.querySelector('#clearBtn');
 const crazyCheck = document.querySelector('input[name=crazy-mode]')
@@ -15,6 +13,23 @@ let pixelCountW = 16;
 initCanvas(pixelCountW);
 
 // =============== FUNCTIONS =================
+function hoverOverPixel(){
+    pixels.forEach((pixel) => {
+        pixel.addEventListener('mouseover', () =>{
+            if(pixel.style.backgroundColor != 0 && pixel.style.backgroundColor !== 'white'){
+                return
+            }
+            else
+                pixel.style.backgroundColor = 'rgba(0, 0, 0, 0.25)';
+        })
+        pixel.addEventListener('mouseleave', () => {
+            if(pixel.style.backgroundColor !== 'rgba(0, 0, 0, 0.25)')
+                return
+            pixel.style.backgroundColor = 'white';
+        })
+    })
+}
+
 function initCanvas(width){
     for(let i = 0; i < width; i++){
         for(let j = 0; j < width; j++){
@@ -27,26 +42,24 @@ function initCanvas(width){
         }
     }
     pixels = document.querySelectorAll(".pixel");
-    console.log(pixels)
-    pixels.forEach((pixel) => {
-        pixel.addEventListener('mouseover', () =>{
-            if(pixel.style.backgroundColor !== null)
-                return;
-            pixel.style.backgroundColor = 'rgba(0, 0, 0, 0.25)';
-        })
-        pixel.addEventListener('mouseleave', () => {
-            if(pixel.style.backgroundColor !== null)
-                return
-            pixel.style.backgroundColor = 'white';
-        })
-    })
+    hoverOverPixel();
+}
+
+function clearCanvas(){
+    for(const pixel of pixels){
+        pixel.style.backgroundColor = 'white';
+    }
 }
 
 function setCanvasWidth(){
     
-    const newWidth = parseInt(prompt("What size x width do you want your canvas to be?"));
+    let newWidth = parseInt(prompt("What size x width do you want your canvas to be?"));
     if(newWidth > 100){
         newWidth = 100;
+    }
+
+    if(isNaN(newWidth)){
+        newWidth = 16;
     }
 
     for(const pixel of pixels){
@@ -60,8 +73,6 @@ function setCanvasWidth(){
 function paintPixel(event){
     const target = event.target;
 
-    console.log(isHoldingMouseButton);
-
     if(crazyModeChecked){
         const r = Math.floor(Math.random() * 256) + 1;
         const g = Math.floor(Math.random() * 256) + 1;
@@ -73,7 +84,6 @@ function paintPixel(event){
         target.style.backgroundColor = 'black';
     }
 }
-
  
 // =========== EVENT LISTENERS ===============
 
@@ -97,14 +107,8 @@ canvas.addEventListener('mouseover', (event) => {
 
 resizeBtn.addEventListener('click', () => setCanvasWidth());
 
-clearBtn.addEventListener('click', () => {
-    for(const pixel of pixels){
-        pixel.style.backgroundColor = 'white';
-    }
-})
+clearBtn.addEventListener('click', clearCanvas)
 
 crazyCheck.addEventListener('change', () => {
     crazyModeChecked = !crazyModeChecked;
-    console.log(crazyModeChecked)
-}
-)
+})
