@@ -59,7 +59,7 @@ function setCanvasWidth(){
     }
 
     if(isNaN(newWidth)){
-        newWidth = 16;
+        return;
     }
 
     for(const pixel of pixels){
