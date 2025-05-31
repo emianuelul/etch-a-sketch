@@ -9,8 +9,9 @@ let eraserOn = false;
 
 const resizeBtn = document.querySelector('#resizeBtn');
 const clearBtn = document.querySelector('#clearBtn');
-const earserBtn = document.querySelector('#eraser');
+const eraserBtn = document.querySelector('#eraser');
 const crazyCheck = document.querySelector('input[name=crazy-mode]')
+const crazyDiv = document.querySelector('.checkbox')
 
 let pixelCountW = 16;
 initCanvas(pixelCountW);
@@ -124,10 +125,17 @@ resizeBtn.addEventListener('click', () => setCanvasWidth());
 clearBtn.addEventListener('click', clearCanvas)
 
 crazyCheck.addEventListener('change', () => {
-    crazyModeChecked = !crazyModeChecked;
+    if(crazyModeChecked){
+        crazyDiv.classList.remove('selected');
+        crazyModeChecked = false;
+    }
+    else{
+        crazyDiv.classList.add('selected');
+        crazyModeChecked = true;
+    }
 })
 
-earserBtn.addEventListener('click', () => {
+eraser.addEventListener('click', () => {
     if(eraserOn){
         earserBtn.classList.remove('selected')
         eraserOn = false;
