@@ -1,7 +1,12 @@
 const canvas = document.querySelector(".canvas");
-const canvasSide = canvas.offsetWidth - 8;
+const canvasStyle = getComputedStyle(canvas);
+const canvasSide = parseInt(canvasStyle.width) - 2 * parseInt(canvasStyle.borderWidth);
 
-const resizeBtn = document.querySelector("#resizeBtn");
+console.log(canvasSide);
+
+const resizeBtn = document.querySelector('#resizeBtn');
+const clearBtn = document.querySelector('#clearBtn');
+
 let pixelCountW = 16;
 
 initCanvas(pixelCountW);
@@ -36,17 +41,18 @@ function setCanvasWidth(){
     console.log(pixels)
 }
 // =========== EVENT LISTENERS ===============
-
-canvas.addEventListener("click", (event) => {
+canvas.addEventListener('mousedown', (event) => {
     const target = event.target;
 
     target.style.backgroundColor = "black";
 })
 
+canvas
 
 resizeBtn.addEventListener('click', () => setCanvasWidth());
 
-
-
-
-
+clearBtn.addEventListener('click', () => {
+    for(const pixel of pixels){
+        pixel.style.backgroundColor = 'white';
+    }
+})
