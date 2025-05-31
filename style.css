@@ -21,6 +21,7 @@ body{
 .canvas{
     display: flex;
     flex-direction: row;
+    background-color: white;
     flex-wrap: wrap;
     width: 912px;
     height: 912px;
