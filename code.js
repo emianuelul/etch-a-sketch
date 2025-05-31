@@ -137,11 +137,11 @@ crazyCheck.addEventListener('change', () => {
 
 eraser.addEventListener('click', () => {
     if(eraserOn){
-        earserBtn.classList.remove('selected')
+        eraser.classList.remove('selected')
         eraserOn = false;
     }
     else{
-        earserBtn.classList.add('selected')
+        eraser.classList.add('selected')
         eraserOn = true;
     }
 })
