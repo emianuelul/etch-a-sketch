@@ -54,8 +54,12 @@ function clearCanvas(){
 function setCanvasWidth(){
     
     let newWidth = parseInt(prompt("What size in pixels do you want your canvas to be?\n Introduce only one number."));
-    if(newWidth > 100){
-        newWidth = 100;
+    if(newWidth > 128){
+        newWidth = 128;
+    }
+
+    if(newWidth < 1){
+        newWidth = 1;
     }
 
     if(isNaN(newWidth)){
