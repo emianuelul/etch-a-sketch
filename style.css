@@ -48,6 +48,7 @@ body{
     color: #7198ae;
     font-size: 60px;
     text-align: center;
+    user-select: none;
 }
 
 .right{
@@ -60,9 +61,10 @@ body{
 .btn{
     border-radius: 10px;
     padding: 10px 25px;
-    border: 0px;
-
-    background-color: #7198ae;
+    
+    color: #7198ae;
+    border: 3px solid #7198ae;
+    background-color: rgba(0,0,0,0);
 
     font-weight: 700;
     font-size: 25px;
@@ -90,10 +92,19 @@ body{
     font-size: 25px;
     border-radius: 10px;
     padding: 10px 25px;
-    background-color: #7198ae;
+    color: #7198ae;
+    border: 3px solid #7198ae;
+
+    transition: 0.1s;
+}
+
+.checkbox:hover{
+    background-color: honeydew;
+    scale: 1.1;
 }
 
 .check{
     width: 40px;
     height: 40px;
+    accent-color:  #7198ae;
 }
